@@ -52,13 +52,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jXButton2" linkSize="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="btnFirst" linkSize="3" min="-2" pref="27" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnPrevious" linkSize="3" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnNext" linkSize="3" min="-2" pref="41" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jXButton1" linkSize="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="btnLast" linkSize="3" min="-2" pref="27" max="-2" attributes="0"/>
                   <EmptySpace pref="265" max="32767" attributes="0"/>
                   <Component id="btnExit" min="-2" pref="83" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -70,16 +70,18 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jXButton2" max="32767" attributes="0"/>
+                      <Component id="btnFirst" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnPrevious" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnNext" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnExit" linkSize="2" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnPrevious" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnExit" linkSize="2" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jXButton1" alignment="1" max="32767" attributes="0"/>
+                      <Component id="btnLast" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -100,6 +102,9 @@
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPreviousActionPerformed"/>
+          </Events>
         </Component>
         <Component class="org.jdesktop.swingx.JXButton" name="btnNext">
           <Properties>
@@ -126,7 +131,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExitActionPerformed"/>
           </Events>
         </Component>
-        <Component class="org.jdesktop.swingx.JXButton" name="jXButton1">
+        <Component class="org.jdesktop.swingx.JXButton" name="btnLast">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -136,8 +141,11 @@
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLastActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="org.jdesktop.swingx.JXButton" name="jXButton2">
+        <Component class="org.jdesktop.swingx.JXButton" name="btnFirst">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -147,6 +155,9 @@
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFirstActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -216,7 +216,7 @@ public final class FormLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        
+
         Tools.readConfigFile();
         String username = txtUsername.getText().trim();
         String pass = new String(txtPassword.getPassword());

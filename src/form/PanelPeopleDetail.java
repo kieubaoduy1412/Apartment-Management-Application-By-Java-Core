@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import org.jdesktop.swingx.JXTable;
 
 /**
  *
@@ -38,12 +39,15 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
      */
     Vector vColumn;
     Vector vData;
+    int rowModel;
+    
 
     public PanelPeopleDetail() {
         initComponents();
         initPeopleDetail(null);
         initWidthTable();
         JTableHeader header = tblPeopleDetail.getTableHeader();
+        
         header.setDefaultRenderer(new HeaderRenderer(tblPeopleDetail));
         initCellAlign();
         // Chỉnh màu nền của table
@@ -141,6 +145,10 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         btnEdit = new org.jdesktop.swingx.JXButton();
         btnDelete = new org.jdesktop.swingx.JXButton();
         btnDeltail = new org.jdesktop.swingx.JXButton();
+        cbbGender = new javax.swing.JComboBox();
+        cbbFloor = new javax.swing.JComboBox();
+        jComboBox1 = new javax.swing.JComboBox();
+        jXTextField1 = new org.jdesktop.swingx.JXTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeopleDetail = new org.jdesktop.swingx.JXTable();
 
@@ -186,6 +194,19 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
             }
         });
 
+        cbbGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbbFloor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jXTextField1.setText("jXTextField1");
+        jXTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jXTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFooterLayout = new javax.swing.GroupLayout(pnlFooter);
         pnlFooter.setLayout(pnlFooterLayout);
         pnlFooterLayout.setHorizontalGroup(
@@ -199,13 +220,26 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDeltail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addComponent(cbbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cbbFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jXTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlFooterLayout.setVerticalGroup(
             pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFooterLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jXTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,11 +363,16 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         System.out.println("Sự kiện khi click chuột vào jtable");
         int rowIndex = tblPeopleDetail.getSelectedRow();
         // Giải thích: vì khi nhấn vào nút để nó Sort thì nó sẽ get nhầm giá trị như lúc trước khi sort
-        int rowModel = tblPeopleDetail.convertRowIndexToModel(rowIndex);
+        rowModel = tblPeopleDetail.convertRowIndexToModel(rowIndex);
         int currentHumanID = Integer.parseInt((String) tblPeopleDetail.getModel().getValueAt(rowModel, 0));
         System.out.println("Current: " + Integer.parseInt((String) tblPeopleDetail.getModel().getValueAt(rowModel, 0)));
         ShareData.getInstance().setCurrentHumanID(currentHumanID);
+        System.out.println("rowIndex: "+rowIndex);
     }//GEN-LAST:event_tblPeopleDetailMouseClicked
+
+    private void jXTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jXTextField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -341,7 +380,11 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
     private org.jdesktop.swingx.JXButton btnDelete;
     private org.jdesktop.swingx.JXButton btnDeltail;
     private org.jdesktop.swingx.JXButton btnEdit;
+    private javax.swing.JComboBox cbbFloor;
+    private javax.swing.JComboBox cbbGender;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
+    private org.jdesktop.swingx.JXTextField jXTextField1;
     private javax.swing.JPanel pnlFooter;
     private org.jdesktop.swingx.JXTable tblPeopleDetail;
     // End of variables declaration//GEN-END:variables
