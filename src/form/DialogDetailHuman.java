@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.border.CompoundBorder;
 
 /**
@@ -27,17 +26,19 @@ import javax.swing.border.CompoundBorder;
 public final class DialogDetailHuman extends javax.swing.JDialog {
 
     int id;
-
+    
     /**
      * Creates new form DetailHumanForm
      *
      * @param parent
      * @param modal
      */
-    public DialogDetailHuman(java.awt.Frame parent, boolean modal) {
+    public DialogDetailHuman(java.awt.Frame parent, boolean modal,String sql) {
         super(parent, modal);
         initComponents();
-        initHuman();
+        System.out.println("Dialog Detail Human SQL:" + sql);
+        initHuman(sql);
+//        System.out.println("InitHumang SQL :"+sql);
         initCompoundBorder();
 //        setDisable();
     }
@@ -457,8 +458,7 @@ public final class DialogDetailHuman extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    final void initHuman() {
-        String sql = "Select * from tblHuman";
+    final void initHuman(String sql) {
         try {
             Connection cn = Tools.getConn();
             st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);

@@ -259,15 +259,7 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
             }
         });
 
-        txtSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchActionPerformed(evt);
-            }
-        });
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtSearchKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearchKeyReleased(evt);
             }
@@ -413,10 +405,12 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    
     private void btnDeltailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeltailActionPerformed
         int rowId = tblPeopleDetail.getSelectedRow();
         if (rowId > -1) {
-            DialogDetailHuman detailHuman = new DialogDetailHuman(null, true);
+            DialogDetailHuman detailHuman = new DialogDetailHuman(null, true, sqlDetail);
+            System.out.println("Before Detail: "+sql);
             detailHuman.setLocationRelativeTo(this);
             detailHuman.setVisible(true);
         } else {
@@ -436,10 +430,6 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         System.out.println("rowIndex: "+rowIndex);
     }//GEN-LAST:event_tblPeopleDetailMouseClicked
 
-    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchActionPerformed
-
     private void cbbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbGenderActionPerformed
         filter();
     }//GEN-LAST:event_cbbGenderActionPerformed
@@ -452,27 +442,28 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         filter();
     }//GEN-LAST:event_cbbTotalActionPerformed
 
-    private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
-        
-    }//GEN-LAST:event_txtSearchKeyPressed
-
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         filter();
     }//GEN-LAST:event_txtSearchKeyReleased
 
+    String sql;
+    String sqlDetail ;
     void filter(){
-        String sql  = "select h.ID, h.Name [Họ và tên], h.Birthday [Ngày sinh], h.Gender [Giới tính],"
+        sql  = "select h.ID, h.Name [Họ và tên], h.Birthday [Ngày sinh], h.Gender [Giới tính],"
                     + " h.Birthplace [Nơi sinh], h.[Native Country] [Dân tộc], h.Nation [Quốc tịch],"
                     + " h.Occupation [Nghề nghiệp], h.Workplace [Nơi công tác],"
                     + " h.[Date of arrival] [Ngày ở],  r.Room [Số phòng]\n"
                     + "from tblHuman h, tblRoom r \n"
                     + "where h.RoomID = r.id ";
+        sqlDetail = "Select * from tblHuman where 0=0";
         if (cbbGender.getSelectedIndex() > 0) {
             System.out.println("CBB Gender: " + cbbGender.getSelectedIndex());
             ModalGender mg = (ModalGender) cbbGender.getSelectedItem();
             sql += " AND h.Gender = " + mg.getId();
+            sqlDetail += " AND Gender = " + mg.getId();
             initPeopleDetail(sql);
             System.out.println("Gender SQL: " + sql);
+            System.out.println("SQL Detail: " + sqlDetail);
             this.updateUI();
         } else {
             initPeopleDetail(sql);
@@ -480,7 +471,6 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         }
         if(cbbFloor.getSelectedIndex()> 0){
             ModalFloor mf = (ModalFloor) cbbFloor.getSelectedItem();
-            
             sql += "AND r.FloorID = " + mf.getId();
             System.out.println("CbbFloorSQL: "+sql);
             initPeopleDetail(sql);
@@ -490,39 +480,52 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         }
         if(cbbTotal.getSelectedIndex()>0){
             switch(cbbTotal.getSelectedIndex()){
-                case(1):sql+= " AND h.name LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                case(1):sql += " AND h.name LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        sqlDetail += "AND name LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
                         System.out.println(sql);
                         initPeopleDetail(sql);
                         break;
-                case(2):sql+= " AND h.Birthplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                case(2):sql += " AND h.Birthplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        sqlDetail += " AND Birthplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
                         System.out.println(sql);
                         initPeopleDetail(sql);
                         break;
-                case(3):sql+= " AND h.[Native Country] LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                case(3):sql += " AND h.[Native Country] LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        sqlDetail += " AND [Native Country] LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
                         System.out.println(sql);
                         initPeopleDetail(sql);
                         break;
-                case(4):sql+= " AND h.Nation LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                case(4):sql += " AND h.Nation LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        sqlDetail += " AND Nation LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
                         System.out.println(sql);
                         initPeopleDetail(sql);
                         break;
-                case(5):sql+= " AND h.Occupation LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                case(5):sql += " AND h.Occupation LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        sqlDetail += " AND Occupation LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
                         System.out.println(sql);
                         initPeopleDetail(sql);
                         break;
-                case(6):sql+= " AND h.Workplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                case(6):sql += " AND h.Workplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        sql += " AND Workplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
                         System.out.println(sql);
                         initPeopleDetail(sql);
                         break;
             }
         }
         else{
-            sql+= " AND ( h.name LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+            sql += " AND ( h.name LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
                     + " OR h.Birthplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
                     + " OR h.[Native Country] LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
                     + " OR h.Nation LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
                     + " OR h.Occupation LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
                     + " OR h.Workplace LIKE " + "N'%" + txtSearch.getText().trim() + "%')"
+                    ;
+            sqlDetail += " AND (name LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR Birthplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR [Native Country] LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR Nation LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR Occupation LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR Workplace LIKE " + "N'%" + txtSearch.getText().trim() + "%')"
                     ;
             System.out.println(sql);
             initPeopleDetail(sql);
