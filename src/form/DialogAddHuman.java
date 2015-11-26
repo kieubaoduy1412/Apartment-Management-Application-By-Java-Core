@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -421,6 +422,7 @@ public final class DialogAddHuman extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserNameActionPerformed
 
+    File f;
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         String sql = "INSERT INTO tblHuman([Name], [Birthday],"
         + " [Gender], [Birthplace], [Native Country],"
@@ -451,6 +453,7 @@ public final class DialogAddHuman extends javax.swing.JDialog {
                 image = new FileInputStream(f);
             }
             pst.setBinaryStream(12, image);
+            pst.setNull(12, Types.BINARY);
             pst.setInt(13, Integer.parseInt(txtRoomID.getText().trim()));
             pst.setString(14, txtEmail.getText().trim());
 
@@ -475,7 +478,7 @@ public final class DialogAddHuman extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
-    File f;
+    
     
     
 

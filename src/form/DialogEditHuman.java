@@ -444,8 +444,6 @@ public class DialogEditHuman extends javax.swing.JDialog {
             ShareData.getInstance().getPpd().initPeopleDetail(null);
             ShareData.getInstance().getPpd().initWidthTable();
             ShareData.getInstance().getPpd().initCellAlign();
-            ///
-            ShareData.getInstance().getDrd().initInfo();
             this.dispose();
 
         } catch (SQLException ex) {

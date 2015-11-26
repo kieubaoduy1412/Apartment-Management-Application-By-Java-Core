@@ -7,21 +7,18 @@ package form;
 
 /**
  *
- * @author zcmgyu
+ * @author PhiLong
  */
-public class ModalFloor {
+public class ModalGender {
     private int id;
-    private String floor;
-    
-    public ModalFloor() {
+    private String gender;
+
+    public ModalGender() {
     }
-    public ModalFloor(int id, String floor) {
+
+    public ModalGender(int id, String gender) {
         this.id = id;
-        this.floor = floor;
-    }
-    @Override
-    public String toString() {
-        return floor;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -32,15 +29,16 @@ public class ModalFloor {
         this.id = id;
     }
 
-    public String getFloor() {
-        return floor;
+    public String getGender() {
+        return gender;
     }
 
-    public void setFloor(String floor) {
-        this.floor = floor;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
     
-
-    
-
+    @Override
+    public String toString() {
+        return gender;
+    }
 }

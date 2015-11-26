@@ -60,9 +60,9 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="cbbFloor" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                  <Component id="jComboBox1" min="-2" pref="66" max="-2" attributes="0"/>
+                  <Component id="cbbTotal" min="-2" pref="66" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="jXTextField1" max="32767" attributes="0"/>
+                  <Component id="txtSearch" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -75,8 +75,8 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="cbbGender" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbbFloor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jXTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbbTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="btnEdit" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="btnAdd" min="-2" pref="30" max="-2" attributes="0"/>
@@ -168,6 +168,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbGenderActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbbFloor">
           <Properties>
@@ -180,8 +183,11 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbFloorActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="cbbTotal">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -192,13 +198,15 @@
               </StringArray>
             </Property>
           </Properties>
-        </Component>
-        <Component class="org.jdesktop.swingx.JXTextField" name="jXTextField1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jXTextField1"/>
-          </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jXTextField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbTotalActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="org.jdesktop.swingx.JXTextField" name="txtSearch">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSearchActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchKeyReleased"/>
           </Events>
         </Component>
       </SubComponents>

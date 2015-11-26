@@ -50,6 +50,9 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         
         header.setDefaultRenderer(new HeaderRenderer(tblPeopleDetail));
         initCellAlign();
+        initCbbGender();
+        initCbbFloor();
+        initCbbTotal();
         // Chỉnh màu nền của table
         // jScrollPane1.getViewport().setBackground(Color.WHITE);
     }
@@ -95,6 +98,7 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         }
     }
 
+
     final void initPeopleDetail(String sql) {
         vColumn = new Vector();
         vData = new Vector();
@@ -130,6 +134,46 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
             Logger.getLogger(ApartmentManagementForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    void initCbbGender(){
+        cbbGender.removeAllItems();
+        cbbGender.addItem(new ModalGender(-1," Tất cả " ));
+        cbbGender.addItem(new ModalGender(0," Nữ "));
+        cbbGender.addItem(new ModalGender(1," Nam "));
+    }
+    
+    void initCbbFloor(){
+        cbbFloor.removeAllItems();
+        cbbFloor.addItem(new ModalFloor(-1, " Tất cả "));
+        String sql = "Select * from tblFloor";
+        try(    Connection cn = Tools.getConn();
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery(sql)
+                )
+        {
+            while (rs.next()){
+                int id = rs.getInt(1);
+                String floorName = rs.getString(2);
+                ModalFloor mf = new ModalFloor(id, floorName);
+                cbbFloor.addItem(mf);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelPeopleDetail.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    void initCbbTotal(){
+        cbbTotal.removeAllItems();
+        cbbTotal.addItem("Tất cả");
+        cbbTotal.addItem("Họ và tên");
+        cbbTotal.addItem("Nơi sinh");
+        cbbTotal.addItem("Dân tộc");
+        cbbTotal.addItem("Quốc tịch");
+        cbbTotal.addItem("Nghề nghiệp");
+        cbbTotal.addItem("Nơi công tác");
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -147,8 +191,8 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         btnDeltail = new org.jdesktop.swingx.JXButton();
         cbbGender = new javax.swing.JComboBox();
         cbbFloor = new javax.swing.JComboBox();
-        jComboBox1 = new javax.swing.JComboBox();
-        jXTextField1 = new org.jdesktop.swingx.JXTextField();
+        cbbTotal = new javax.swing.JComboBox();
+        txtSearch = new org.jdesktop.swingx.JXTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeopleDetail = new org.jdesktop.swingx.JXTable();
 
@@ -195,15 +239,37 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         });
 
         cbbGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbGender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbGenderActionPerformed(evt);
+            }
+        });
 
         cbbFloor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jXTextField1.setText("jXTextField1");
-        jXTextField1.addActionListener(new java.awt.event.ActionListener() {
+        cbbFloor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jXTextField1ActionPerformed(evt);
+                cbbFloorActionPerformed(evt);
+            }
+        });
+
+        cbbTotal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbTotalActionPerformed(evt);
+            }
+        });
+
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
             }
         });
 
@@ -225,9 +291,9 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(cbbFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jXTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlFooterLayout.setVerticalGroup(
@@ -238,8 +304,8 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
                     .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cbbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbbFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jXTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbbTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -365,15 +431,104 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
         // Giải thích: vì khi nhấn vào nút để nó Sort thì nó sẽ get nhầm giá trị như lúc trước khi sort
         rowModel = tblPeopleDetail.convertRowIndexToModel(rowIndex);
         int currentHumanID = Integer.parseInt((String) tblPeopleDetail.getModel().getValueAt(rowModel, 0));
-        System.out.println("Current: " + Integer.parseInt((String) tblPeopleDetail.getModel().getValueAt(rowModel, 0)));
+        System.out.println("CurrentHumanID: " + Integer.parseInt((String) tblPeopleDetail.getModel().getValueAt(rowModel, 0)));
         ShareData.getInstance().setCurrentHumanID(currentHumanID);
         System.out.println("rowIndex: "+rowIndex);
     }//GEN-LAST:event_tblPeopleDetailMouseClicked
 
-    private void jXTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXTextField1ActionPerformed
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jXTextField1ActionPerformed
+    }//GEN-LAST:event_txtSearchActionPerformed
 
+    private void cbbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbGenderActionPerformed
+        filter();
+    }//GEN-LAST:event_cbbGenderActionPerformed
+
+    private void cbbFloorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbFloorActionPerformed
+        filter();
+    }//GEN-LAST:event_cbbFloorActionPerformed
+
+    private void cbbTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTotalActionPerformed
+        filter();
+    }//GEN-LAST:event_cbbTotalActionPerformed
+
+    private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
+        
+    }//GEN-LAST:event_txtSearchKeyPressed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        filter();
+    }//GEN-LAST:event_txtSearchKeyReleased
+
+    void filter(){
+        String sql  = "select h.ID, h.Name [Họ và tên], h.Birthday [Ngày sinh], h.Gender [Giới tính],"
+                    + " h.Birthplace [Nơi sinh], h.[Native Country] [Dân tộc], h.Nation [Quốc tịch],"
+                    + " h.Occupation [Nghề nghiệp], h.Workplace [Nơi công tác],"
+                    + " h.[Date of arrival] [Ngày ở],  r.Room [Số phòng]\n"
+                    + "from tblHuman h, tblRoom r \n"
+                    + "where h.RoomID = r.id ";
+        if (cbbGender.getSelectedIndex() > 0) {
+            System.out.println("CBB Gender: " + cbbGender.getSelectedIndex());
+            ModalGender mg = (ModalGender) cbbGender.getSelectedItem();
+            sql += " AND h.Gender = " + mg.getId();
+            initPeopleDetail(sql);
+            System.out.println("Gender SQL: " + sql);
+            this.updateUI();
+        } else {
+            initPeopleDetail(sql);
+            this.updateUI();
+        }
+        if(cbbFloor.getSelectedIndex()> 0){
+            ModalFloor mf = (ModalFloor) cbbFloor.getSelectedItem();
+            
+            sql += "AND r.FloorID = " + mf.getId();
+            System.out.println("CbbFloorSQL: "+sql);
+            initPeopleDetail(sql);
+        }
+        else{
+            initPeopleDetail(sql);
+        }
+        if(cbbTotal.getSelectedIndex()>0){
+            switch(cbbTotal.getSelectedIndex()){
+                case(1):sql+= " AND h.name LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        System.out.println(sql);
+                        initPeopleDetail(sql);
+                        break;
+                case(2):sql+= " AND h.Birthplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        System.out.println(sql);
+                        initPeopleDetail(sql);
+                        break;
+                case(3):sql+= " AND h.[Native Country] LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        System.out.println(sql);
+                        initPeopleDetail(sql);
+                        break;
+                case(4):sql+= " AND h.Nation LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        System.out.println(sql);
+                        initPeopleDetail(sql);
+                        break;
+                case(5):sql+= " AND h.Occupation LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        System.out.println(sql);
+                        initPeopleDetail(sql);
+                        break;
+                case(6):sql+= " AND h.Workplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'";
+                        System.out.println(sql);
+                        initPeopleDetail(sql);
+                        break;
+            }
+        }
+        else{
+            sql+= " AND ( h.name LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR h.Birthplace LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR h.[Native Country] LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR h.Nation LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR h.Occupation LIKE " + "N'%" + txtSearch.getText().trim() + "%'"
+                    + " OR h.Workplace LIKE " + "N'%" + txtSearch.getText().trim() + "%')"
+                    ;
+            System.out.println(sql);
+            initPeopleDetail(sql);
+            
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXButton btnAdd;
@@ -382,10 +537,10 @@ public final class PanelPeopleDetail extends javax.swing.JPanel {
     private org.jdesktop.swingx.JXButton btnEdit;
     private javax.swing.JComboBox cbbFloor;
     private javax.swing.JComboBox cbbGender;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox cbbTotal;
     private javax.swing.JScrollPane jScrollPane1;
-    private org.jdesktop.swingx.JXTextField jXTextField1;
     private javax.swing.JPanel pnlFooter;
     private org.jdesktop.swingx.JXTable tblPeopleDetail;
+    private org.jdesktop.swingx.JXTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

@@ -311,6 +311,8 @@ public final class DialogDetailHuman extends javax.swing.JDialog {
         btnFemale.setOpaque(false);
 
         lblImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblImage.setAlignmentY(0
+        );
 
         txtArrivalDate.setDate(new java.util.Date(1447606800000L));
 
@@ -407,7 +409,7 @@ public final class DialogDetailHuman extends javax.swing.JDialog {
                             .addComponent(jXLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnFemale)
                             .addComponent(btnMale)))
-                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jXLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -463,6 +465,7 @@ public final class DialogDetailHuman extends javax.swing.JDialog {
             rs = st.executeQuery(sql);
 //            System.out.println(ShareData.getInstance().getPpd().rowIndex);
             if(rs.absolute(ShareData.getInstance().getPpd().rowModel + 1)){
+                System.out.println("RowModel: " + ShareData.getInstance().getPpd().rowModel);
                 setData();
             }
         } catch (SQLException ex) {
@@ -523,6 +526,7 @@ public final class DialogDetailHuman extends javax.swing.JDialog {
                     img = image.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH);
                     lblImage.setIcon(new ImageIcon(img));
                 }
+                else lblImage.setIcon(null);
                 txtRoomID.setText(rs.getString(14));
                 txtEmail.setText(rs.getString(15));
         } catch (SQLException ex) {
